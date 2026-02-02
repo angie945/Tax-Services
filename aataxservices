@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A&A Tax Services</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#101a33;
+      --muted:#a7b0c0;
+      --text:#eef2ff;
+      --accent:#5eead4;
+      --accent2:#60a5fa;
+      --danger:#fb7185;
+      --border: rgba(255,255,255,.10);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1000px 600px at 20% 10%, rgba(96,165,250,.20), transparent 60%),
+                  radial-gradient(900px 500px at 80% 30%, rgba(94,234,212,.18), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      position:sticky; top:0;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,.65);
+      border-bottom:1px solid var(--border);
+      z-index:10;
+    }
+    .nav{
+      max-width:1100px; margin:0 auto; padding:14px 18px;
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      display:grid; place-items:center;
+      background: linear-gradient(135deg, rgba(94,234,212,.25), rgba(96,165,250,.25));
+      border:1px solid var(--border);
+      font-weight:900;
+    }
+    .links{display:flex; gap:14px; flex-wrap:wrap}
+    .links a{color:var(--text); opacity:.9; font-weight:600}
+    .links a:hover{opacity:1}
+    .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 70px}
+    .hero{
+      padding:34px 0 10px;
+      display:grid; grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+    }
+    .hcard{
+      border:1px solid var(--border);
+      background: rgba(16,26,51,.60);
+      border-radius:18px;
+      padding:22px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.25);
+    }
+    h1{margin:0 0 10px; font-size: clamp(30px, 4vw, 44px); line-height:1.1}
+    .sub{color:var(--muted); font-size:1.05rem; margin:0 0 16px}
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:700;
+      font-size:.9rem;
+      margin-bottom:14px;
+    }
+    .pill{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .pill span{
+      padding:7px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      color:var(--muted);
+      font-weight:700;
+      font-size:.9rem;
+      background: rgba(255,255,255,.04);
+    }
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    button, .btn{
+      cursor:pointer;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px 14px;
+      font-weight:800;
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+    }
+    .btnPrimary{
+      background: linear-gradient(135deg, rgba(94,234,212,.20), rgba(96,165,250,.20));
+      border-color: rgba(255,255,255,.16);
+    }
+    .btnPrimary:disabled{
+      opacity:.45; cursor:not-allowed;
+    }
+    .mini{
+      font-size:.9rem; color:var(--muted);
+      margin-top:10px;
+    }
+    .grid{
+      display:grid; grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    @media (max-width: 980px){ .grid{grid-template-columns:1fr 1fr} }
+    @media (max-width: 640px){ .grid{grid-template-columns:1fr} }
+    section{margin-top:22px}
+    .sectionTitle{
+      display:flex; align-items:end; justify-content:space-between; gap:10px;
+      margin:22px 0 10px;
+    }
+    .sectionTitle h2{margin:0; font-size:1.35rem}
+    .sectionTitle p{margin:0; color:var(--muted); font-weight:600}
+    .card{
+      border:1px solid var(--border);
+      background: rgba(16,26,51,.55);
+      border-radius:16px;
+      padding:16px;
+    }
+    .svcTop{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+    .price{
+      font-weight:900;
+      color: var(--accent);
+      font-size:1.2rem;
+      white-space:nowrap;
+    }
+    .muted{color:var(--muted)}
+    ul{margin:10px 0 0 20px; color:var(--muted)}
+    .twoCol{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 900px){ .twoCol{grid-template-columns:1fr} }
+    label{display:block; font-weight:800; margin:10px 0 6px}
+    input, textarea, select{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      outline:none;
+    }
+    textarea{min-height:110px; resize:vertical}
+    .agreeRow{
+      display:flex; align-items:flex-start; gap:10px;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(255,255,255,.04);
+      margin-top:12px;
+    }
+    .agreeRow input{width:auto; margin-top:3px}
+    .fine{
+      font-size:.9rem; color:var(--muted);
+    }
+    .danger{color: var(--danger); font-weight:800}
+    footer{
+      margin-top:28px;
+      padding-top:16px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-weight:600;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .toast{
+      margin-top:10px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(94,234,212,.10);
+      display:none;
+    }
+    .toast.show{display:block}
+    .note{
+      padding:12px;
+      border-radius:14px;
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      font-weight:600;
+    }
+    .smallcaps{
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:.78rem;
+      color:var(--muted);
+      font-weight:900;
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="nav">
+    <div class="brand">
+      <div class="logo">A&A</div>
+      <div>
+        <div style="font-size:1.05rem;">A&amp;A Tax Services</div>
+        <div class="smallcaps">Fast • Accurate • Confidential</div>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="#services">Services &amp; Pricing</a>
+      <a href="#agreement">Client Agreement</a>
+      <a href="#request">Request Service</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="hcard">
+      <div class="badge">✅ Tax preparation &amp; filing • Individuals &amp; small businesses</div>
+      <h1>Stress-free taxes with clear pricing.</h1>
+      <p class="sub">
+        We help you file correctly, maximize eligible deductions/credits, and keep your information secure.
+      </p>
+      <div class="ctaRow">
+        <a class="btn btnPrimary" href="#request">Get Started</a>
+        <a class="btn" href="#agreement">Review Agreement</a>
+      </div>
+      <p class="mini">Questions? Add your details below and we’ll follow up.</p>
+
+      <div class="pill">
+        <span>Federal + State</span>
+        <span>W-2 • 1099 • Schedule C</span>
+        <span>Audit Support</span>
+        <span>Year-round help</span>
+      </div>
+    </div>
+
+    <div class="hcard">
+      <h2 style="margin:0 0 8px;">Hours &amp; Contact</h2>
+      <p class="muted" style="margin:0 0 12px;">
+        Update these details to match your business.
+      </p>
+      <div class="card" style="padding:14px;">
+        <p style="margin:0 0 8px;"><strong>Phone:</strong> (555) 123-4567</p>
+        <p style="margin:0 0 8px;"><strong>Email:</strong> contact@aataxservices.com</p>
+        <p style="margin:0 0 8px;"><strong>Location:</strong> Your City, State</p>
+        <p style="margin:0;"><strong>Hours:</strong> Mon–Fri 9am–6pm</p>
+      </div>
+      <p class="fine" style="margin-top:12px;">
+        Tip: If you want this website to “send” requests to your email, you’ll need a simple backend
+        (or a form service). This page shows an on-screen confirmation by default.
+      </p>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="sectionTitle">
+      <h2>Services &amp; Pricing</h2>
+      <p>Transparent, upfront starting prices.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="svcTop">
+          <div>
+            <strong>Basic Individual Return</strong>
+            <div class="muted">W-2, standard deduction</div>
+          </div>
+          <div class="price">$149+</div>
+        </div>
+        <ul>
+          <li>Federal + 1 state return</li>
+          <li>e-File included</li>
+          <li>Simple credits/deductions</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="svcTop">
+          <div>
+            <strong>Itemized Individual Return</strong>
+            <div class="muted">Schedule A, common deductions</div>
+          </div>
+          <div class="price">$249+</div>
+        </div>
+        <ul>
+          <li>Mortgage interest / property taxes</li>
+          <li>Charitable contributions</li>
+          <li>Federal + 1 state return</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="svcTop">
+          <div>
+            <strong>Self-Employed / 1099 (Schedule C)</strong>
+            <div class="muted">Contractors, gig workers</div>
+          </div>
+          <div class="price">$349+</div>
+        </div>
+        <ul>
+          <li>Business income/expense review</li>
+          <li>Common deductions guidance</li>
+          <li>Federal + 1 state return</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="svcTop">
+          <div>
+            <strong>Small Business Return</strong>
+            <div class="muted">LLC/Partnership/S-Corp (varies)</div>
+          </div>
+          <div class="price">$599+</div>
+        </div>
+        <ul>
+          <li>Entity-specific return preparation</li>
+          <li>Basic reconciliation review</li>
+          <li>Client checklist provided</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="svcTop">
+          <div>
+            <strong>Tax Planning Consultation</strong>
+            <div class="muted">Strategies &amp; estimated taxes</div>
+          </div>
+          <div class="price">$125/hr</div>
+        </div>
+        <ul>
+          <li>Estimated tax guidance</li>
+          <li>Withholding review</li>
+          <li>Year-round support</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="svcTop">
+          <div>
+            <strong>IRS / State Notice Assistance</strong>
+            <div class="muted">Letters, notices, responses</div>
+          </div>
+          <div class="price">$175+</div>
+        </div>
+        <ul>
+          <li>Notice review + next steps</li>
+          <li>Draft response guidance</li>
+          <li>Representation options discussed</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="note" style="margin-top:14px;">
+      <strong>Pricing note:</strong> Final pricing may vary based on complexity, number of forms, additional states,
+      prior-year corrections, and bookkeeping condition. You’ll receive a quote before work begins.
+    </p>
+  </section>
+
+  <!-- AGREEMENT -->
+  <section id="agreement">
+    <div class="sectionTitle">
+      <h2>Client Service Agreement</h2>
+      <p>Please review before requesting service.</p>
+    </div>
+
+    <div class="card">
+      <p class="muted" style="margin-top:0;">
+        This sample agreement is provided for convenience. Consider having a qualified professional review it for your
+        business and state requirements.
+      </p>
+
+      <h3 style="margin-bottom:6px;">1) Scope of Services</h3>
+      <p class="muted">
+        A&amp;A Tax Services will prepare and/or assist with tax forms based on information you provide. We do not audit or
+        verify the accuracy/completeness of documents you submit.
+      </p>
+
+      <h3 style="margin-bottom:6px;">2) Client Responsibilities</h3>
+      <ul>
+        <li>Provide complete, accurate information and documentation.</li>
+        <li>Review your return(s) before signing/authorizing filing.</li>
+        <li>Maintain your records and supporting documents.</li>
+      </ul>
+
+      <h3 style="margin-bottom:6px;">3) Fees &amp; Payment</h3>
+      <p class="muted">
+        Fees are based on the services selected and complexity. Any required deposit, balance due, and optional add-ons
+        will be communicated before filing.
+      </p>
+
+      <h3 style="margin-bottom:6px;">4) Privacy &amp; Confidentiality</h3>
+      <p class="muted">
+        We treat your data as confidential and use reasonable safeguards. You authorize us to use your data solely to
+        perform requested services and communicate with you.
+      </p>
+
+      <h3 style="margin-bottom:6px;">5) Deadlines</h3>
+      <p class="muted">
+        Filing deadlines depend on timely receipt of your documents. Late submission may limit our ability to file by
+        statutory deadlines. Extensions can be discussed upon request.
+      </p>
+
+      <h3 style="margin-bottom:6px;">6) Limitation of Liability</h3>
+      <p class="muted">
+        Our liability is limited to fees paid for the specific service. We are not responsible for penalties/interest
+        resulting from incomplete/incorrect information provided by the client or late submission of documents.
+      </p>
+
+      <h3 style="margin-bottom:6px;">7) Authorization</h3>
+      <p class="muted">
+        By checking “I agree,” you acknowledge you have read and accept these terms and request A&amp;A Tax Services to
+        begin work as discussed.
+      </p>
+    </div>
+  </section>
+
+  <!-- REQUEST FORM -->
+  <section id="request">
+    <div class="sectionTitle">
+      <h2>Request Service</h2>
+      <p>Submit your info after agreeing to the terms.</p>
+    </div>
+
+    <div class="twoCol">
+      <div class="card">
+        <form id="requestForm">
+          <label for="name">Full Name</label>
+          <input id="name" name="name" placeholder="Jane Doe" required />
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="jane@email.com" required />
+
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" placeholder="(555) 000-0000" />
+
+          <label for="service">Service Needed</label>
+          <select id="service" name="service" required>
+            <option value="" disabled selected>Select a service</option>
+            <option>Basic Individual Return ($149+)</option>
+            <option>Itemized Individual Return ($249+)</option>
+            <option>Self-Employed / 1099 Schedule C ($349+)</option>
+            <option>Small Business Return ($599+)</option>
+            <option>Tax Planning Consultation ($125/hr)</option>
+            <option>IRS / State Notice Assistance ($175+)</option>
+          </select>
+
+          <label for="message">Notes (optional)</label>
+          <textarea id="message" name="message" placeholder="Anything we should know?"></textarea>
+
+          <div class="agreeRow">
+            <input type="checkbox" id="agree" />
+            <div>
+              <div style="font-weight:900;">I agree to the Client Service Agreement</div>
+              <div class="fine">
+                By checking this box, you acknowledge you have read and accept the terms in the
+                <a href="#agreement">Client Service Agreement</a> section.
+              </div>
+              <div id="agreeWarn" class="fine" style="display:none; margin-top:6px;">
+                <span class="danger">Please check the box to continue.</span>
+              </div>
+            </div>
+          </div>
+
+          <button id="submitBtn" class="btnPrimary" type="submit" disabled>
+            Request Service
+          </button>
+
+          <div id="toast" class="toast" role="status" aria-live="polite">
+            ✅ Request received on this page (demo). To email this to you, connect a backend or form service.
+          </div>
+
+          <p class="fine" style="margin-top:12px;">
+            We’ll respond using the contact information you provide.
+          </p>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0;">Optional Add-Ons (edit anytime)</h3>
+        <ul>
+          <li>Additional state return: <strong>$60+</strong></li>
+          <li>Schedule D (stocks/crypto): <strong>$75+</strong></li>
+          <li>Rental property (Schedule E): <strong>$125+</strong></li>
+          <li>Prior-year return: <strong>$200+</strong></li>
+          <li>Amended return: <strong>$250+</strong></li>
+        </ul>
+
+        <div class="note" style="margin-top:14px;">
+          <strong>Want online payments + file uploads?</strong><br />
+          Common next steps are adding:
+          <ul>
+            <li>A secure upload link (client portal)</li>
+            <li>Online invoicing (Stripe/Square)</li>
+            <li>An appointment scheduler</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>© <span id="year"></span> A&amp;A Tax Services. All rights reserved.</div>
+    <div class="fine">This site provides general information and is not legal advice.</div>
+  </footer>
+</main>
+
+<script>
+  const agree = document.getElementById('agree');
+  const submitBtn = document.getElementById('submitBtn');
+  const agreeWarn = document.getElementById('agreeWarn');
+  const toast = document.getElementById('toast');
+  const form = document.getElementById('requestForm');
+
+  // Enable button only when agreement is checked
+  function updateButtonState(){
+    submitBtn.disabled = !agree.checked;
+    agreeWarn.style.display = agree.checked ? 'none' : 'block';
+  }
+
+  agree.addEventListener('change', () => {
+    updateButtonState();
+  });
+
+  // Prevent submit unless agreed
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!agree.checked){
+      updateButtonState();
+      return;
+    }
+
+    // Demo behavior: show confirmation on-page (no backend)
+    toast.classList.add('show');
+
+    // Optional: clear fields
+    form.reset();
+    submitBtn.disabled = true;
+    agreeWarn.style.display = 'none';
+
+    // Hide toast after a bit
+    setTimeout(() => toast.classList.remove('show'), 6000);
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
